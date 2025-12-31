@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Princess Tingi 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --princess-pink: #ff85a2;
+            --royal-gold: #ffd700;
+            --glass-white: rgba(255, 255, 255, 0.12);
+            --cute-purple: #e0b3ff; /* Added for cuter bubbles */
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #1a0f1f 0%, #050505 100%);
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none; /* Prevents accidental refreshing while interacting */
+        }
+
+        /* Ambient Animated Glow */
+        .glow {
+            position: fixed;
+            width: 150vw;
+            height: 150vw;
+            background: radial-gradient(circle, rgba(255, 133, 162, 0.15), transparent 60%);
+            top: -25vw;
+            left: -25vw;
+            z-index: -1;
+            animation: moveGlow 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes moveGlow {
+            from { transform: translate(0, 0); }
+            to { transform: translate(20vw, 20vw); }
+        }
+
+        /* Cuter Mobile Optimized Bubbles - Fixed Z-Index and Positioning */
+        .bubble {
+            position: absolute;
+            background: var(--glass-white);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6px; /* Reduced padding for better fit */
+            color: var(--royal-gold);
+            font-size: 10px; /* Smaller font for mobile */
+            font-weight: 600;
+            pointer-events: none;
+            animation: rise 10s infinite linear, wiggle 3s infinite ease-in-out; /* Slower rise, added wiggle for cuteness */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.3); /* Added glow */
+            z-index: 11; /* Higher than card (10) to appear in front */
+            opacity: 0;
+            animation-fill-mode: forwards;
+            word-wrap: break-word; /* Prevents overflow */
+            max-width: 80px; /* Limits width to fit text */
+        }
+
+        .bubble.heart-shape {
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Occasional heart shape */
+            background: linear-gradient(45deg, var(--princess-pink), var(--cute-purple));
+        }
+
+        .bubble::before {
+            content: '✨'; /* Sparkle emoji for cuteness */
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 10px; /* Smaller sparkle */
+            animation: sparkle 2s infinite alternate;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(110vh) scale(0.6); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) scale(1.1); opacity: 0; }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(2deg); }
+            75% { transform: rotate(-2deg); }
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0.5; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Main Card - Mobile Optimized */
+        .card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 30px 20px;
+            width: 88%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            z-index: 10; /* Lower than bubbles */
+            transition: transform 0.2s ease-out;
+        }
+
+        .princess-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 32px;
+            color: var(--royal-gold);
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            position: relative;
+        }
+
+        .princess-title::after {
+            content: '👑'; /* Crown sparkle for cuteness */
+            position: absolute;
+            top: -10px;
+            right: -20px;
+            font-size: 20px;
+            animation: sparkle 2s infinite alternate;
+        }
+
+        .heart-main {
+            font-size: 55px;
+            margin: 10px 0;
+            animation: heartbeat 1.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px var(--princess-pink));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .message {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .highlight { color: var(--princess-pink); font-weight: 600; }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: var(--royal-gold);
+            margin-top: 10px;
+        }
+
+        /* Mobile Controls */
+        .btn-group {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .reveal-btn {
+            background: linear-gradient(45deg, var(--princess-pink), #ff1493);
+            border: none;
+            width: 100%;
+            max-width: 220px;
+            padding: 14px;
+            border-radius: 50px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .reveal-btn:hover { transform: scale(1.05); }
+
+        .music-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .music-toggle:hover { background: rgba(255, 255, 255, 0.2); }
+
+        #surpriseContent {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 133, 162, 0.1);
+            border-radius: 20px;
+            font-size: 14px;
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow"></div>
+
+    <div class="card" id="mainCard">
+        <div class="princess-title">Happy New Year, Tingi!</div>
+        <div class="heart-main">💖</div>
+        
+        <div class="message">
+            Naya saal teri life mein dher saari success laaye. <span class="highlight">Sorry</span> agar maine kabhi tang kiya ho, par tera bhai hamesha tere saath hai. <br><br>
+            Tu meri <span class="highlight">Princess</span> hai! Kabhi bhi man bhari ho ya koi baat ho, be-jhijhak mujhe bta dena. Main hamesha tere liye hoon.
+        </div>
+
+        <div class="signature">Tera Bhai 💕</div>
+
+        <div class="btn-group">
+            <button class="reveal-btn" id="revealBtn">Tap for Surprise 🎁</button>
+            <button class="music-toggle" id="musicBtn">🎵</button>
+        </div>
+
+        <div id="surpriseContent">
+            <p style="color: var(--royal-gold); font-weight: 600; font-size: 16px;">Virtual Hug! 🤗</p>
+            <p>Yeh jhappi hamesha tere liye hai. Khush reh meri behn! ✨</p>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Tenu Sang Rakhna - Jigra.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const revealBtn = document.getElementById('revealBtn');
+        const surpriseContent = document.getElementById('surpriseContent');
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let isMusicPlaying = false;
+
+        // Music Control
+        musicBtn.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicBtn.textContent = '🎵';
+            } else {
+                bgMusic.play();
+                musicBtn.textContent = '🔇';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        // Cuter Princess Bubbles with Shortened Messages and Fixed Positioning
+        const messages = [
+            "Meri Princess 👸", 
+            "Love You Behn 💖", 
+            "Always With You 🤝", 
+            "Virtual Hug 🤗", 
+            "Khush Reh ✨",
+            "Mera Support 🥇",
+            "Support Krti H Noob <3",
+            "Special Insan H <3",
+            "Tu Meri Strength <3",
+            "Jhappi Tere Liye <3",
+            "Dreams Follow Kar <3",
+            "Sabse Important Tu <3",
+            "Free Fire to Real Life Journey Thank You Behn 🦄🌸" // Shortened new message
+        ];
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 40 + 60 + 'px'; // Smaller sizes for better fit
+            bubble.style.width = size;
+            bubble.style.height = size;
+            // Position bubbles around the screen edges to avoid card overlap
+            const cardRect = document.getElementById('mainCard').getBoundingClientRect();
+            let leftPos;
+            do {
+                leftPos = Math.random() * 90 + 'vw';
+            } while (parseFloat(leftPos) > cardRect.left / window.innerWidth * 100 - 10 && parseFloat(leftPos) < (cardRect.right / window.innerWidth * 100) + 10); // Avoid card area
+            bubble.style.left = leftPos;
+            bubble.style.animationDuration = Math.random() * 4 + 8 + 's'; // Slower for cuter effect
+            bubble.innerText = messages[Math.floor(Math.random() * messages.length)];
+            
+            // Randomly make some heart-shaped for extra cuteness
+            if (Math.random() > 0.7) {
+                bubble.classList.add('heart-shape');
+            }
+            
+            document.body.appendChild(bubble);
+            setTimeout(() => bubble.remove(), 12000); // Longer lifespan
+        }
+        setInterval(createBubble, 2000); // Slightly less frequent for better performance
+
+        // Surprise & Fireworks
+        revealBtn.addEventListener('click', () => {
+            surpriseContent.style.display = 'block';
+            revealBtn.style.display = 'none';
+
+            // Enhanced Confetti Blast
+            confetti({
+                particleCount: 120,
+                spread: 70,
+                origin: { y: 0.7 },
+                colors: ['#ff85a2', '#ffd700', '#ffffff', '#e0b3ff'] // Added cute purple
+            });
+
+            // Fireworks Loop with More Variety
+            let end = Date.now() + (12 * 1000);
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff85a2', '#ffd700', '#e0b3ff']
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff85a2', '#ffd700', '#e0b3ff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        });
+
+        // Mobile Tilt Effect (Uses Orientation or subtle touch movement)
+        const card = document.getElementById('mainCard');
+        document.addEventListener('touchmove', (e) => {
+            let touch = e.touches[0];
+            let x = (window.innerWidth / 2 - touch.pageX) / 20;
+            let y = (window.innerHeight / 2 - touch.pageY) / 20;
+            card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        }, { passive: true });
+        
+        document.addEventListener('touchend', () => {
+            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+    </script>
+</body>
+</html>
