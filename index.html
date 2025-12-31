@@ -6,23 +6,22 @@
     <title>For My Princess Tingi 💖</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
         :root {
             --princess-pink: #ff85a2;
             --royal-gold: #ffd700;
-            --glass-white: rgba(255, 255, 255, 0.12);
-            --cute-purple: #e0b3ff; /* Added for cuter bubbles */
+            --glass-white: rgba(255, 255, 255, 0.15);
         }
 
         * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+            margin: 0; padding: 0; box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent; 
         }
         
         body {
             font-family: 'Poppins', sans-serif;
+            background: #0c0c0c;
             background: radial-gradient(circle at center, #1a0f1f 0%, #050505 100%);
             color: #fff;
             overflow: hidden;
@@ -31,80 +30,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Removed touch-action: none to allow button clicks */
+            position: relative;
         }
 
-        /* Ambient Animated Glow - Added webkit prefix for mobile */
-        .glow {
-            position: fixed;
-            width: 150vw;
-            height: 150vw;
-            background: radial-gradient(circle, rgba(255, 133, 162, 0.15), transparent 60%);
-            top: -25vw;
-            left: -25vw;
-            z-index: -1;
-            -webkit-animation: moveGlow 15s infinite alternate ease-in-out;
-            animation: moveGlow 15s infinite alternate ease-in-out;
-        }
-
-        @-webkit-keyframes moveGlow {
-            from { -webkit-transform: translate(0, 0); transform: translate(0, 0); }
-            to { -webkit-transform: translate(20vw, 20vw); transform: translate(20vw, 20vw); }
-        }
-
-        @keyframes moveGlow {
-            from { transform: translate(0, 0); }
-            to { transform: translate(20vw, 20vw); }
-        }
-
-        /* Cuter Mobile Optimized Bubbles - Fixed Positioning and Z-Index */
+        /* Bubbles - Fixed for Mobile Interaction */
         .bubble {
             position: absolute;
             background: var(--glass-white);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px); /* Fallback for older mobile */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 6px;
             color: var(--royal-gold);
             font-size: 10px;
             font-weight: 600;
             pointer-events: none;
-            -webkit-animation: rise 10s infinite linear, wiggle 3s infinite ease-in-out;
-            animation: rise 10s infinite linear, wiggle 3s infinite ease-in-out;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2), 0 0 10px rgba(255, 215, 0, 0.3);
-            z-index: 11;
-            opacity: 0;
-            -webkit-animation-fill-mode: forwards;
-            animation-fill-mode: forwards;
-            word-wrap: break-word;
-            max-width: 80px;
-        }
-
-        .bubble.heart-shape {
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            background: linear-gradient(45deg, var(--princess-pink), var(--cute-purple));
-        }
-
-        .bubble::before {
-            content: '✨';
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            font-size: 10px;
-            -webkit-animation: sparkle 2s infinite alternate;
-            animation: sparkle 2s infinite alternate;
-        }
-
-        @-webkit-keyframes rise {
-            0% { -webkit-transform: translateY(110vh) scale(0.6); transform: translateY(110vh) scale(0.6); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { -webkit-transform: translateY(-20vh) scale(1.1); transform: translateY(-20vh) scale(1.1); opacity: 0; }
+            z-index: 5; /* Lower than card buttons */
+            animation: rise linear forwards;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 5px;
+            overflow: hidden;
         }
 
         @keyframes rise {
@@ -114,75 +63,34 @@
             100% { transform: translateY(-20vh) scale(1.1); opacity: 0; }
         }
 
-        @-webkit-keyframes wiggle {
-            0%, 100% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
-            25% { -webkit-transform: rotate(2deg); transform: rotate(2deg); }
-            75% { -webkit-transform: rotate(-2deg); transform: rotate(-2deg); }
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(2deg); }
-            75% { transform: rotate(-2deg); }
-        }
-
-        @-webkit-keyframes sparkle {
-            0% { opacity: 0.5; -webkit-transform: scale(0.8); transform: scale(0.8); }
-            100% { opacity: 1; -webkit-transform: scale(1.2); transform: scale(1.2); }
-        }
-
-        @keyframes sparkle {
-            0% { opacity: 0.5; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Main Card - Mobile Optimized */
+        /* Card Setup */
         .card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
             padding: 30px 20px;
-            width: 88%;
-            max-width: 400px;
+            width: 90%;
+            max-width: 380px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            z-index: 10;
-            -webkit-transition: transform 0.2s ease-out;
-            transition: transform 0.2s ease-out;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            position: relative;
         }
 
         .princess-title {
             font-family: 'Dancing Script', cursive;
-            font-size: 32px;
+            font-size: 30px;
             color: var(--royal-gold);
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-            position: relative;
-        }
-
-        .princess-title::after {
-            content: '👑';
-            position: absolute;
-            top: -10px;
-            right: -20px;
-            font-size: 20px;
-            -webkit-animation: sparkle 2s infinite alternate;
-            animation: sparkle 2s infinite alternate;
+            margin-bottom: 10px;
         }
 
         .heart-main {
-            font-size: 55px;
+            font-size: 50px;
             margin: 10px 0;
-            -webkit-animation: heartbeat 1.5s infinite ease-in-out;
             animation: heartbeat 1.5s infinite ease-in-out;
-            filter: drop-shadow(0 0 10px var(--princess-pink));
-        }
-
-        @-webkit-keyframes heartbeat {
-            0%, 100% { -webkit-transform: scale(1); transform: scale(1); }
-            50% { -webkit-transform: scale(1.1); transform: scale(1.1); }
+            display: block;
         }
 
         @keyframes heartbeat {
@@ -191,48 +99,34 @@
         }
 
         .message {
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 14px;
+            line-height: 1.6;
             margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 300;
+            color: #ddd;
         }
 
         .highlight { color: var(--princess-pink); font-weight: 600; }
 
-        .signature {
-            font-family: 'Dancing Script', cursive;
-            font-size: 24px;
-            color: var(--royal-gold);
-            margin-top: 10px;
-        }
-
-        /* Mobile Controls */
         .btn-group {
-            margin-top: 25px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
             align-items: center;
         }
 
         .reveal-btn {
             background: linear-gradient(45deg, var(--princess-pink), #ff1493);
             border: none;
-            width: 100%;
-            max-width: 220px;
-            padding: 14px;
+            width: 80%;
+            padding: 12px;
             border-radius: 50px;
             color: #fff;
             font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+            font-size: 15px;
             cursor: pointer;
-            -webkit-transition: transform 0.2s ease;
-            transition: transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            z-index: 110;
         }
-
-        .reveal-btn:hover { transform: scale(1.05); }
 
         .music-toggle {
             background: rgba(255, 255, 255, 0.1);
@@ -241,41 +135,35 @@
             height: 45px;
             border-radius: 50%;
             color: white;
+            font-size: 18px;
+            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            -webkit-transition: background 0.2s ease;
-            transition: background 0.2s ease;
+            z-index: 110;
         }
-
-        .music-toggle:hover { background: rgba(255, 255, 255, 0.2); }
 
         #surpriseContent {
             display: none;
-            margin-top: 20px;
-            padding: 15px;
+            margin-top: 15px;
+            padding: 10px;
             background: rgba(255, 133, 162, 0.1);
-            border-radius: 20px;
-            font-size: 14px;
-            -webkit-animation: slideUp 0.8s ease;
-            animation: slideUp 0.8s ease;
+            border-radius: 15px;
+            font-size: 13px;
+            border: 1px solid rgba(255, 133, 162, 0.2);
         }
 
-        @-webkit-keyframes slideUp {
-            from { opacity: 0; -webkit-transform: translateY(20px); transform: translateY(20px); }
-            to { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Sparkle effect on card */
+        .card::after {
+            content: '👑';
+            position: absolute;
+            top: -15px;
+            right: 10px;
+            font-size: 25px;
         }
     </style>
 </head>
-<body>
-
-    <div class="glow"></div>
+<body onclick="initMusic()">
 
     <div class="card" id="mainCard">
         <div class="princess-title">Happy New Year, Tingi!</div>
@@ -283,10 +171,8 @@
         
         <div class="message">
             Naya saal teri life mein dher saari success laaye. <span class="highlight">Sorry</span> agar maine kabhi tang kiya ho, par tera bhai hamesha tere saath hai. <br><br>
-            Tu meri <span class="highlight">Princess</span> hai! Kabhi bhi man bhari ho ya koi baat ho, be-jhijhak mujhe bta dena. Main hamesha tere liye hoon.
+            Tu meri <span class="highlight">Princess</span> hai! Kabhi bhi man bhari ho, bina jhijhak mujhe bta dena. Main hamesha tere liye hoon.
         </div>
-
-        <div class="signature">Tera Bhai 💕</div>
 
         <div class="btn-group">
             <button class="reveal-btn" id="revealBtn">Tap for Surprise 🎁</button>
@@ -294,123 +180,121 @@
         </div>
 
         <div id="surpriseContent">
-            <p style="color: var(--royal-gold); font-weight: 600; font-size: 16px;">Virtual Hug! 🤗</p>
+            <p style="color: var(--royal-gold); font-weight: 600;">Virtual Hug! 🤗</p>
             <p>Yeh jhappi hamesha tere liye hai. Khush reh meri behn! ✨</p>
         </div>
     </div>
 
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="Tenu Sang Rakhna - Jigra.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Page loaded, initializing scripts...'); // Debug log
+        const revealBtn = document.getElementById('revealBtn');
+        const surpriseContent = document.getElementById('surpriseContent');
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let isMusicPlaying = false;
+        let musicInitialized = false;
 
-            const revealBtn = document.getElementById('revealBtn');
-            const surpriseContent = document.getElementById('surpriseContent');
-            const musicBtn = document.getElementById('musicBtn');
-            const bgMusic = document.getElementById('bgMusic');
-            let isMusicPlaying = false;
-
-            // Music Control
-            musicBtn.addEventListener('click', () => {
-                console.log('Music button clicked'); // Debug log
-                if (isMusicPlaying) {
-                    bgMusic.pause();
-                    musicBtn.textContent = '🎵';
-                } else {
-                    bgMusic.play().catch(e => console.error('Audio play failed:', e)); // Handle autoplay restrictions
-                    musicBtn.textContent = '🔇';
-                }
-                isMusicPlaying = !isMusicPlaying;
-            });
-
-            // Cuter Princess Bubbles with Shortened Messages and Fixed Positioning
-            const messages = [
-                "Meri Princess 👸", 
-                "Love You Behn 💖", 
-                "Always With You 🤝", 
-                "Virtual Hug 🤗", 
-                "Khush Reh ✨",
-                "Mera Support 🥇",
-                "Support Krti H Noob <3",
-                "Special Insan H <3",
-                "Tu Meri Strength <3",
-                "Jhappi Tere Liye <3",
-                "Dreams Follow Kar <3",
-                "Sabse Important Tu <3",
-                "Free Fire to Real Life Journey Thank You Behn 🦄🌸"
-            ];
-
-            function createBubble() {
-                console.log('Creating bubble...'); // Debug log
-                const bubble = document.createElement('div');
-                bubble.className = 'bubble';
-                const size = Math.random() * 40 + 60 + 'px';
-                bubble.style.width = size;
-                bubble.style.height = size;
-                
-                // Fixed positioning: Generate left position outside card area
-                const cardRect = document.getElementById('mainCard').getBoundingClientRect();
-                const cardLeftPercent = (cardRect.left / window.innerWidth) * 100;
-                const cardRightPercent = (cardRect.right / window.innerWidth) * 100;
-                let leftPos;
-                // Ensure bubbles spawn left of card or right of card, not overlapping
-                if (Math.random() > 0.5) {
-                    leftPos = Math.random() * (cardLeftPercent - 10) + '%'; // Left side
-                } else {
-                    leftPos = (cardRightPercent + 10 + Math.random() * (90 - cardRightPercent - 10)) + '%'; // Right side
-                }
-                bubble.style.left = leftPos;
-                bubble.style.animationDuration = Math.random() * 4 + 8 + 's';
-                bubble.innerText = messages[Math.floor(Math.random() * messages.length)];
-                
-                if (Math.random() > 0.7) {
-                    bubble.classList.add('heart-shape');
-                }
-                
-                document.body.appendChild(bubble);
-                setTimeout(() => bubble.remove(), 12000);
+        // Function to start music on first interaction (Required for Mobile)
+        function initMusic() {
+            if (!musicInitialized) {
+                bgMusic.play().then(() => {
+                    bgMusic.pause(); // Just initializing
+                    musicInitialized = true;
+                }).catch(e => console.log("Init blocked"));
             }
-            setInterval(createBubble, 2000);
+        }
 
-            // Surprise & Fireworks
-            revealBtn.addEventListener('click', () => {
-                console.log('Surprise button clicked'); // Debug log
-                surpriseContent.style.display = 'block';
-                revealBtn.style.display = 'none';
+        // Music Toggle Logic
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicBtn.textContent = '🎵';
+            } else {
+                bgMusic.play();
+                musicBtn.textContent = '🔇';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
 
-                // Enhanced Confetti Blast
-                confetti({
-                    particleCount: 120,
-                    spread: 70,
-                    origin: { y: 0.7 },
-                    colors: ['#ff85a2', '#ffd700', '#ffffff', '#e0b3ff']
-                });
+        // Bubble Generator - Mobile Optimized
+        const messages = [
+            "Meri Princess 👸", "Love You Behn 💖", "Virtual Hug 🤗", 
+            "Support Krti H Noob <3", "Jhappi Tere Liye <3", "Strength <3",
+            "Free Fire to Real Life Journey 🦄"
+        ];
 
-                // Fireworks Loop
-                let end = Date.now() + (12 * 1000);
-                (function frame() {
-                    confetti({
-                        particleCount: 3,
-                        angle: 60,
-                        spread: 55,
-                        origin: { x: 0 },
-                        colors: ['#ff85a2', '#ffd700', '#e0b3ff']
-                    });
-                    confetti({
-                        particleCount: 3,
-                        angle: 120,
-                        spread: 55,
-                        origin: { x: 1 },
-                        colors: ['#ff85a2', '#ffd700', '#e0b3ff']
-                    });
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.floor(Math.random() * 30 + 60) + 'px';
+            bubble.style.width = size;
+            bubble.style.height = size;
+            bubble.style.left = Math.random() * 85 + 'vw';
+            bubble.style.animationDuration = Math.random() * 3 + 6 + 's';
+            bubble.innerText = messages[Math.floor(Math.random() * messages.length)];
+            
+            document.body.appendChild(bubble);
+            // Remove from DOM to save mobile memory
+            setTimeout(() => bubble.remove(), 9000);
+        }
+        setInterval(createBubble, 2000);
 
-                    if (Date.now() < end) {
-                        requestAnimationFrame(frame);
-                    }
-                }());
+        // Surprise Button Logic
+        revealBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            surpriseContent.style.display = 'block';
+            revealBtn.style.display = 'none';
+
+            // Start music automatically on surprise
+            bgMusic.play();
+            musicBtn.textContent = '🔇';
+            isMusicPlaying = true;
+
+            // Mobile Confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.8 }
             });
 
-            //
+            // Fireworks Loop (10 seconds)
+            let end = Date.now() + (10 * 1000);
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff85a2', '#ffd700']
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff85a2', '#ffd700']
+                });
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        });
+
+        // Simple Mobile Tilt (No complex math to avoid lag)
+        document.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const moveX = (window.innerWidth / 2 - touch.pageX) / 25;
+            const moveY = (window.innerHeight / 2 - touch.pageY) / 25;
+            document.getElementById('mainCard').style.transform = `rotateY(${moveX}deg) rotateX(${moveY}deg)`;
+        }, { passive: true });
+
+        document.addEventListener('touchend', () => {
+            document.getElementById('mainCard').style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+    </script>
+</body>
+</html>
